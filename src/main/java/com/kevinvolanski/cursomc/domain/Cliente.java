@@ -51,8 +51,10 @@ public class Cliente implements Serializable {
 	//Definido como um conjunto de strings, não repetindo valores.
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
-	@Getter @Setter 
-	private Set<String> telefones = new HashSet<>();
+	@Getter @Setter private Set<String> telefones = new HashSet<>();
+	
+	@OneToMany(mappedBy = "cliente")
+	@Getter @Setter private List<Pedido> pedidos = new ArrayList<>();
 
 	
 	

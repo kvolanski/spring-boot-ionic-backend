@@ -1,5 +1,6 @@
 package com.kevinvolanski.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,20 @@ import com.kevinvolanski.cursomc.domain.Cidade;
 import com.kevinvolanski.cursomc.domain.Cliente;
 import com.kevinvolanski.cursomc.domain.Endereco;
 import com.kevinvolanski.cursomc.domain.Estado;
+import com.kevinvolanski.cursomc.domain.Pagamento;
+import com.kevinvolanski.cursomc.domain.PagamentoComBoleto;
+import com.kevinvolanski.cursomc.domain.PagamentoComCartao;
+import com.kevinvolanski.cursomc.domain.Pedido;
 import com.kevinvolanski.cursomc.domain.Produto;
+import com.kevinvolanski.cursomc.domain.enums.EstadoPagamento;
 import com.kevinvolanski.cursomc.domain.enums.TipoCliente;
 import com.kevinvolanski.cursomc.repositories.CategoriaRepository;
 import com.kevinvolanski.cursomc.repositories.CidadeRepository;
 import com.kevinvolanski.cursomc.repositories.ClienteRepository;
 import com.kevinvolanski.cursomc.repositories.EnderecoRepository;
 import com.kevinvolanski.cursomc.repositories.EstadoRepository;
+import com.kevinvolanski.cursomc.repositories.PagamentoRepository;
+import com.kevinvolanski.cursomc.repositories.PedidoRepository;
 import com.kevinvolanski.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -41,13 +49,20 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		
 		Categoria categoria1 = new Categoria(null,"Informática");
 		Categoria categoria2 = new Categoria(null,"Escritório");
 		Categoria categoria3 = new Categoria(null,"Mesa e banho");
@@ -82,13 +97,28 @@ public class CursomcApplication implements CommandLineRunner {
 		estado1.getCidades().addAll(Arrays.asList(cidade1));
 		estado2.getCidades().addAll(Arrays.asList(cidade2,cidade3));
 		
-	
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		Pedido pedido1 = new Pedido(null, simpleDateFormat.parse("30/09/2017 16:24"), null, cliente1,endereco );
+		Pedido pedido2 = new Pedido(null, simpleDateFormat.parse("10/10/2017 17:00"), null, cliente1, endereco2);
+		
+		
+		Pagamento pagamento1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, pedido1, 6);
+		pedido1.setPagamento(pagamento1);
+		
+		Pagamento pagamento2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, pedido2,simpleDateFormat.parse("20/10/2017 00:00"),null );
+		pedido2.setPagamento(pagamento2);
+		
+		cliente1.getPedidos().addAll(Arrays.asList(pedido1,pedido2));
+		
 		categoriaRepository.saveAll(Arrays.asList(categoria1,categoria2,categoria3));
 		produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3));
 		estadoRepository.saveAll(Arrays.asList(estado1,estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1,cidade2,cidade3));
 		clienteRepository.saveAll(Arrays.asList(cliente1));
 		enderecoRepository.saveAll(Arrays.asList(endereco,endereco2));
+		pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
+		pagamentoRepository.saveAll(Arrays.asList(pagamento1,pagamento2));
 		
 		
 	}
