@@ -14,10 +14,10 @@ import com.kevinvolanski.cursomc.domain.Endereco;
 import com.kevinvolanski.cursomc.domain.Estado;
 import com.kevinvolanski.cursomc.domain.Produto;
 import com.kevinvolanski.cursomc.domain.enums.TipoCliente;
-import com.kevinvolanski.cursomc.repositories.ClienteRepository;
-import com.kevinvolanski.cursomc.repositories.EnderecoRepository;
 import com.kevinvolanski.cursomc.repositories.CategoriaRepository;
 import com.kevinvolanski.cursomc.repositories.CidadeRepository;
+import com.kevinvolanski.cursomc.repositories.ClienteRepository;
+import com.kevinvolanski.cursomc.repositories.EnderecoRepository;
 import com.kevinvolanski.cursomc.repositories.EstadoRepository;
 import com.kevinvolanski.cursomc.repositories.ProdutoRepository;
 
