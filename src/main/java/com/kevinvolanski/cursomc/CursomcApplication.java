@@ -9,8 +9,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.kevinvolanski.cursomc.domain.Categoria;
 import com.kevinvolanski.cursomc.domain.Cidade;
+import com.kevinvolanski.cursomc.domain.Cliente;
+import com.kevinvolanski.cursomc.domain.Endereco;
 import com.kevinvolanski.cursomc.domain.Estado;
 import com.kevinvolanski.cursomc.domain.Produto;
+import com.kevinvolanski.cursomc.domain.enums.TipoCliente;
+import com.kevinvolanski.cursomc.repositories.ClienteRepository;
+import com.kevinvolanski.cursomc.repositories.EnderecoRepository;
 import com.kevinvolanski.cursomc.repositories.CategoriaRepository;
 import com.kevinvolanski.cursomc.repositories.CidadeRepository;
 import com.kevinvolanski.cursomc.repositories.EstadoRepository;
@@ -30,6 +35,12 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -52,6 +63,15 @@ public class CursomcApplication implements CommandLineRunner {
 		Cidade cidade2 = new Cidade(null, "São Paulo", estado2);
 		Cidade cidade3 = new Cidade(null, "Campinas", estado2);
 		
+		Cliente cliente1 = new Cliente(null,"Maria Silva","maria@gmail.com","15473780008",TipoCliente.PESSOAFISICA);
+		
+		cliente1.getTelefones().addAll(Arrays.asList("99785454", "987451236"));
+		
+		Endereco endereco = new Endereco (null,"Rua Flores","39","Casa","Jardim","82840650",cliente1,cidade1);
+		Endereco endereco2 = new Endereco(null,"Rua Margaria","80","Apartamento","Apto01","82815690",cliente1,cidade2);
+		
+		cliente1.getEnderecos().addAll(Arrays.asList(endereco,endereco2));
+		
 		categoria1.getProdutos().addAll(Arrays.asList(produto1,produto2,produto3));
 		categoria2.getProdutos().addAll(Arrays.asList(produto2));
 		
@@ -67,6 +87,9 @@ public class CursomcApplication implements CommandLineRunner {
 		produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3));
 		estadoRepository.saveAll(Arrays.asList(estado1,estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1,cidade2,cidade3));
+		clienteRepository.saveAll(Arrays.asList(cliente1));
+		enderecoRepository.saveAll(Arrays.asList(endereco,endereco2));
+		
 		
 	}
 
