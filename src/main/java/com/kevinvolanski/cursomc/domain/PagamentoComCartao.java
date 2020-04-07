@@ -26,27 +26,4 @@ public class PagamentoComCartao extends Pagamento {
 		this.numeroParcelas = numeroParcelas;
 	}
 
-
 }
-
-//@Entity
-//@Data
-//public class PagamentoComCartao extends Pagamento {
-//
-//	private static final long serialVersionUID = 1L;
-//	
-//	@Getter @Setter private Integer NumeroParcelas;
-//
-//	public PagamentoComCartao(Integer numeroParcelas, Integer id, Pedido pedido ) {
-//		super();
-//		NumeroParcelas = numeroParcelas;
-//	}
-//
-//	public PagamentoComCartao(Object object, EstadoPagamento quitado, Pedido pedido1, int i) {
-//		// TODO Auto-generated constructor stub
-//	}
-//
-//	
-//	
-//	
-//}

@@ -14,21 +14,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kevinvolanski.cursomc.domain.enums.TipoCliente;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+
+
 
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
-@ToString
+@Data
 @EqualsAndHashCode
 public class Cliente implements Serializable {
 
@@ -37,27 +37,26 @@ public class Cliente implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private Integer id;
+	private Integer id;
 	
-	@Getter @Setter private String nome;
-	@Getter @Setter private String email;
-	@Getter @Setter private String cpfOuCnpj;
+	private String nome;
+	private String email;
+	private String cpfOuCnpj;
 	
 	private Integer tipoCliente;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
-	@Getter @Setter private List<Endereco> enderecos = new ArrayList<>();
+	private List<Endereco> enderecos = new ArrayList<>();
 	
 	
 	//Definido como um conjunto de strings, não repetindo valores.
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
-	@Getter @Setter private Set<String> telefones = new HashSet<>();
+	private Set<String> telefones = new HashSet<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
-	@Getter @Setter private List<Pedido> pedidos = new ArrayList<>();
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	
 	
