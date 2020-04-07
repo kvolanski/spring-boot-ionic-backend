@@ -12,37 +12,37 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Data
 public class Endereco implements Serializable{
 
 	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private Integer id;
+	private Integer id;
 	
-	@Getter @Setter private String logradouro;
-	@Getter @Setter private String numero;	
-	@Getter @Setter private String complemento;
-	@Getter @Setter private String bairro;
-	@Getter @Setter private String cep;
+	private String logradouro;
+	private String numero;	
+	private String complemento;
+	private String bairro;
+	private String cep;
 	
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
-	@Getter @Setter private Cliente cliente;	
+	private Cliente cliente;	
 	
 	@ManyToOne
 	@JoinColumn(name="cidade_id")
-	@Getter @Setter private Cidade cidade;
+	private Cidade cidade;
 	
 }

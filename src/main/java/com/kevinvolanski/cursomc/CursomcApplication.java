@@ -13,6 +13,7 @@ import com.kevinvolanski.cursomc.domain.Cidade;
 import com.kevinvolanski.cursomc.domain.Cliente;
 import com.kevinvolanski.cursomc.domain.Endereco;
 import com.kevinvolanski.cursomc.domain.Estado;
+import com.kevinvolanski.cursomc.domain.ItemPedido;
 import com.kevinvolanski.cursomc.domain.Pagamento;
 import com.kevinvolanski.cursomc.domain.PagamentoComBoleto;
 import com.kevinvolanski.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.kevinvolanski.cursomc.repositories.CidadeRepository;
 import com.kevinvolanski.cursomc.repositories.ClienteRepository;
 import com.kevinvolanski.cursomc.repositories.EnderecoRepository;
 import com.kevinvolanski.cursomc.repositories.EstadoRepository;
+import com.kevinvolanski.cursomc.repositories.ItemPedidoRepository;
 import com.kevinvolanski.cursomc.repositories.PagamentoRepository;
 import com.kevinvolanski.cursomc.repositories.PedidoRepository;
 import com.kevinvolanski.cursomc.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -111,6 +116,17 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		cliente1.getPedidos().addAll(Arrays.asList(pedido1,pedido2));
 		
+		ItemPedido itemPedido1 = new ItemPedido(pedido1, produto1, 0.00, 1, 2000.00 );
+		ItemPedido itemPedido2 = new ItemPedido(pedido1, produto3, 0.00, 2, 80.00);
+		ItemPedido itemPedido3 = new ItemPedido(pedido2, produto2, 100.00, 1, 800.00);
+		
+		pedido1.getItens().addAll(Arrays.asList(itemPedido1, itemPedido2));
+		pedido2.getItens().addAll(Arrays.asList(itemPedido3));
+		
+		produto1.getItens().addAll(Arrays.asList(itemPedido1));
+		produto2.getItens().addAll(Arrays.asList(itemPedido3));
+		produto3.getItens().addAll(Arrays.asList(itemPedido2));
+		
 		categoriaRepository.saveAll(Arrays.asList(categoria1,categoria2,categoria3));
 		produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3));
 		estadoRepository.saveAll(Arrays.asList(estado1,estado2));
@@ -119,6 +135,7 @@ public class CursomcApplication implements CommandLineRunner {
 		enderecoRepository.saveAll(Arrays.asList(endereco,endereco2));
 		pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1,pagamento2));
+		itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
 		
 		
 	}

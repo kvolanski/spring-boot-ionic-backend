@@ -2,6 +2,8 @@ package com.kevinvolanski.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,40 +12,53 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@NoArgsConstructor @AllArgsConstructor
-@ToString
-@EqualsAndHashCode
 public class Pedido implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private Integer id;
+	@EqualsAndHashCode.Include
+	private Integer id;
 	
-	@Getter @Setter private Date instante;
+	private Date instante;
 	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-	@Getter @Setter private Pagamento pagamento;
+	private Pagamento pagamento;
 	
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
-	@Getter @Setter private Cliente cliente;
+	private Cliente cliente;
 	
 	@ManyToOne
 	@JoinColumn(name="endereco_entrega_id")
-	@Getter @Setter private Endereco enderecoEntrega;
+	private Endereco enderecoEntrega;
 	
-	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 
+	public Pedido(Integer id, Date instante, Pagamento pagamento, Cliente cliente, Endereco enderecoEntrega) {
+		super();
+		this.id = id;
+		this.instante = instante;
+		this.pagamento = pagamento;
+		this.cliente = cliente;
+		this.enderecoEntrega = enderecoEntrega;
+	}
+
+
+	
+	
 }
