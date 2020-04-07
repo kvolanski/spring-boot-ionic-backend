@@ -12,16 +12,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kevinvolanski.cursomc.domain.enums.EstadoPagamento;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Pagamento implements Serializable{
 
@@ -29,14 +30,15 @@ public abstract class Pagamento implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter private Integer id;
+	private Integer id;
 	
-	@Getter @Setter private Integer estadoPagamento;
+	private Integer estadoPagamento;
 	
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name="pedido_id")
 	@MapsId
-	@Getter @Setter private Pedido pedido;
+	private Pedido pedido;
 	
 	public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
 		super();
