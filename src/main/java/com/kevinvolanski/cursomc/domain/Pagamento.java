@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@NoArgsConstructor
+@NoArgsConstructor 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public abstract class Pagamento implements Serializable{
