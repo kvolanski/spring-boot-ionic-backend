@@ -13,6 +13,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.kevinvolanski.cursomc.domain.enums.EstadoPagamento;
 
 import lombok.Data;
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable{
 
 	private static final long serialVersionUID = 1L;
