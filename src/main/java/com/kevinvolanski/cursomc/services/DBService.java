@@ -20,6 +20,7 @@ import com.kevinvolanski.cursomc.domain.PagamentoComCartao;
 import com.kevinvolanski.cursomc.domain.Pedido;
 import com.kevinvolanski.cursomc.domain.Produto;
 import com.kevinvolanski.cursomc.domain.enums.EstadoPagamento;
+import com.kevinvolanski.cursomc.domain.enums.Perfil;
 import com.kevinvolanski.cursomc.domain.enums.TipoCliente;
 import com.kevinvolanski.cursomc.repositories.CategoriaRepository;
 import com.kevinvolanski.cursomc.repositories.CidadeRepository;
@@ -96,14 +97,20 @@ public class DBService {
 		Cidade cidade2 = new Cidade(null, "São Paulo", estado2);
 		Cidade cidade3 = new Cidade(null, "Campinas", estado2);
 		
-		Cliente cliente1 = new Cliente(null,"Maria Silva","kvolanski@gmail.com","15473780008",TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
-		
+		Cliente cliente1 = new Cliente(null,"Maria Silva","kvolanski@gmail.com","15473780008",TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));	
 		cliente1.getTelefones().addAll(Arrays.asList("99785454", "987451236"));
+		
+		Cliente cliente2 = new Cliente(null,"Ana Paula","kvolanskicursos@gmail.com","92612421033",TipoCliente.PESSOAFISICA, bCryptPasswordEncoder.encode("123"));
+		cliente2.addPerfil(Perfil.ADMIN);
+		cliente2.getTelefones().addAll(Arrays.asList("99780000"));
 		
 		Endereco endereco = new Endereco (null,"Rua Flores","39","Casa","Jardim","82840650",cliente1,cidade1);
 		Endereco endereco2 = new Endereco(null,"Rua Margaria","80","Apartamento","Apto01","82815690",cliente1,cidade2);
+		Endereco endereco3 = new Endereco(null,"Avenida Maringa","200",null,"Centro","21321454",cliente2,cidade2);
 		
 		cliente1.getEnderecos().addAll(Arrays.asList(endereco,endereco2));
+		cliente2.getEnderecos().addAll(Arrays.asList(endereco3));
+		
 		
 		categoria1.getProdutos().addAll(Arrays.asList(produto1,produto2,produto3));
 		categoria2.getProdutos().addAll(Arrays.asList(produto2,produto4));
@@ -157,8 +164,8 @@ public class DBService {
 		produtoRepository.saveAll(Arrays.asList(produto1,produto2,produto3,produto4,produto5,produto6,produto7,produto8,produto9,produto10,produto11));
 		estadoRepository.saveAll(Arrays.asList(estado1,estado2));
 		cidadeRepository.saveAll(Arrays.asList(cidade1,cidade2,cidade3));
-		clienteRepository.saveAll(Arrays.asList(cliente1));
-		enderecoRepository.saveAll(Arrays.asList(endereco,endereco2));
+		clienteRepository.saveAll(Arrays.asList(cliente1,cliente2));
+		enderecoRepository.saveAll(Arrays.asList(endereco,endereco2,endereco3));
 		pedidoRepository.saveAll(Arrays.asList(pedido1,pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1,pagamento2));
 		itemPedidoRepository.saveAll(Arrays.asList(itemPedido1, itemPedido2, itemPedido3));
