@@ -45,7 +45,6 @@ public class Cliente implements Serializable {
 
 	private Integer tipoCliente;
 
-	private String imageUrl;
 
 	@JsonIgnore
 	private String senha;
